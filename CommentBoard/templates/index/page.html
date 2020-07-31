@@ -24,6 +24,7 @@
             <li>
                 <h4>by {{ comment.author }}</h4>
                 {{ comment.message }}
+                <a href="{% url 'Boards:update_comment' board.pk comment.pk %}">댓글 수정</a>
                 <a href="{% url 'Boards:delete_comment' board.pk comment.pk %}">댓글 삭제</a>
             </li>
         {% endfor %}

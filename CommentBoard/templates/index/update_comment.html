@@ -6,15 +6,12 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>댓글 수정하기</h1>
     <form action="" method="POST">
         {% csrf_token %}
-        <table>
-            {{ form.as_p }}
-        </table>
-
-        <input type="submit" value="댓글 등록">
+        {{ form.as_p }}
+        <input type="submit" value="댓글 수정하기">
     </form>
-
-
+    
 </body>
 </html>

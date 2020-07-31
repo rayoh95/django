@@ -14,7 +14,7 @@ def Boards(request):
 
 
 #Create_post 는 게시글 한 개 쓰기
-def Create_post(request):
+def create_post(request):
 
     if request.method == "POST":
         form = BoardForm(request.POST)
@@ -62,7 +62,7 @@ def page(request, pk):
     context = {'board' : board, 'comments' : comments }
     return render(request, 'index/page.html', context)
 
-def Create_comment(request, pk):
+def create_comment(request, pk):
 
     board = get_object_or_404(Board, pk=pk)
     
@@ -79,8 +79,28 @@ def Create_comment(request, pk):
     return render(request, 'index/comment.html', context)        
 
 
-def Delete_comment(request, board_id, comment_id):
+def delete_comment(request, board_id, comment_id):
+
     comment = Comment.objects.get(pk=comment_id)
     comment.delete()
     
     return redirect('Boards:page', board_id)
+
+def update_comment(request, board_id, comment_id):
+
+    board = board_id
+    pk = comment_id
+    comment = get_object_or_404(Comment, pk=pk)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+
+        if form.is_valid():
+            comment.save()
+            return redirect('Boards:page', pk=board)
+    else:
+        form = CommentForm(instance=comment)
+    context = { 'form' : form }
+    return render(request, 'index/update_comment.html', context)           
+
+
