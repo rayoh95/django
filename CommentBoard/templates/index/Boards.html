@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board list</title>
+</head>
+<body>
+    <h1>게시판 글 목록</h1>
+    <a href="/boards/create/"><button>글 작성하러 가기</button></a>
+    {% for a in board %}
+        <hr>
+        id : {{ a.id }}<br>
+        <a href = "/boards/{{a.pk}}/">제목 : {{ a.title }}</a><br>
+        내용 : {{ a.content }}<br>
+        <a href="{% url 'Boards:update' a.id %}"><button>글 수정하기</button></a>
+        <a href="{% url 'Boards:delete' a.id %}"><button>글 삭제하기</button></a>
+
+        {% endfor %}
+</body>
+</html>
