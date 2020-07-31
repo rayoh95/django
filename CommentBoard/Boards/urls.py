@@ -11,5 +11,5 @@ urlpatterns = [
     path('<int:pk>/delete/', views.delete_post, name = "delete"),
     path('<int:pk>/', views.page, name = "page"),
     path('<int:pk>/comment/create/', views.Create_comment, name = "comment"),
-   
+   path('<int:board_id>/comments/<int:comment_id>/delete/', views.Delete_comment, name='delete_comment'),
 ]

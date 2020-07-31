@@ -11,6 +11,8 @@
         제목: {{ board.title }}<br>
         내용: {{ board.content }}<br>
 
+        <small?><a href="/boards/"><button>글 목록으로 돌아가기</button></a></small>
+
     <h3>Comments</h3>
 
     <a href = "{% url 'Boards:comment' pk=board.pk %}" board.pk>댓글 쓰기</a><br>
@@ -22,6 +24,7 @@
             <li>
                 <h4>by {{ comment.author }}</h4>
                 {{ comment.message }}
+                <a href="{% url 'Boards:delete_comment' board.pk comment.pk %}">댓글 삭제</a>
             </li>
         {% endfor %}
     </ul>

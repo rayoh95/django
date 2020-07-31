@@ -14,5 +14,3 @@ class Comment(models.Model):
     author = models.CharField(max_length = 10)
     message = models.TextField()
 
-    class Meta:
-        ordering = ['id']

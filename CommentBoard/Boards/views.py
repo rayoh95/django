@@ -79,15 +79,8 @@ def Create_comment(request, pk):
     return render(request, 'index/comment.html', context)        
 
 
-# if request.method == "POST":
-#         form = BoardForm(request.POST)
-
-#         if form.is_valid():
-#             form.save()
-#             return render(request, 'index/success.html')
-
-#     else:
-#         board = BoardForm()
+def Delete_comment(request, board_id, comment_id):
+    comment = Comment.objects.get(pk=comment_id)
+    comment.delete()
     
-#     context = { 'board' : board } 
-#     return render(request, 'index/Board.html', context)
+    return redirect('Boards:page', board_id)
