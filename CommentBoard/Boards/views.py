@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Board, Comment
 from .forms import BoardForm, CommentForm
+from django.db.models import Q
 
 # Create your views here.
 
@@ -101,6 +102,22 @@ def update_comment(request, board_id, comment_id):
     else:
         form = CommentForm(instance=comment)
     context = { 'form' : form }
-    return render(request, 'index/update_comment.html', context)           
+    return render(request, 'index/update_comment.html', context)
 
 
+def search(request):
+
+    # board = Board.objects.all().order_by("-id")
+
+    keyWord = request.POST.get('keyWord',"")
+
+    if keyWord:
+        board = Board.objects.filter(Q(title__icontains=keyWord) | Q(content__icontains=keyWord)).order_by("-id")
+        return render(request, 'index/Search.html', {'board':board, 'keyWord':keyWord})
+    else:
+        return render(request,'index/Search.html')
+
+    
+
+
+    

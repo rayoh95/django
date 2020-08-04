@@ -6,16 +6,47 @@
     <title>Board list</title>
 </head>
 <body>
-    <h1>게시판 글 목록</h1>
-    <a href="/boards/create/"><button>글 작성하러 가기</button></a>
-    {% for a in board %}
-        <hr>
-        id : {{ a.id }}<br>
-        <a href = "/boards/{{a.pk}}/">제목 : {{ a.title }}</a><br>
-        내용 : {{ a.content }}<br>
-        <a href="{% url 'Boards:update' a.id %}"><button>글 수정하기</button></a>
-        <a href="{% url 'Boards:delete' a.id %}"><button>글 삭제하기</button></a>
+    <div style = "background-color: rgb(73, 73, 73);">
+        <h1 style = "color : white">게시판 글 목록</h1>
+        
+        <a href="/boards/create/" style="position:relative; top: 50px; left: 900px; color: #ffffff;
+        background: #3379FE; padding: 0.3em 0.5em; margin-right: 0.1em; text-decoration:none">글 작성하러 가기</a>
+        
+        <!-- 검색창 -->
+        <form action="/boards/search/" method="POST">
+            {% csrf_token %}
+            <input type="search" placeholder="Search" name="keyWord" value="{{keyWord}}">
+            <button type="submit">Search</button>
+        </form>
 
+    </div>
+
+    <div style = "height: 25px;">
+        <ul>
+            <li style = "list-style: none; float: left; margin-left: 20px;">번호</li>
+            <li style = "list-style: none; float: left; margin-left: 50px;">제목</li>
+        </ul>
+    </div>
+
+    <div>
+        <hr>
+        {% for a in board %}
+            <div style = "height: 40px;">
+                <li style = "list-style: none; float: left; margin-left: 70px;">
+                    {{ a.id }}
+                </li>
+                <li style = "list-style: none; float: left; margin-left: 60px;">
+                    <a href = "/boards/{{a.pk}}/">{{ a.title }}</a>
+                </li>
+            </div>
+            <div style = "position: relative; top: -45px; left: 900px;">
+                <small><a href="{% url 'Boards:update' a.id %}" style = "text-decoration:none">글 수정하기</a></small><br>
+                <small><a href="{% url 'Boards:delete' a.id %}" style = "text-decoration:none">글 삭제하기</a></small>
+            </div>
         {% endfor %}
+    </div>
 </body>
 </html>
+<style>
+
+</style>

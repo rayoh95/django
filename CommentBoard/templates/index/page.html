@@ -7,13 +7,15 @@
 </head>
 <body>
     <h1>글</h1>
+    <small?><a href="/boards/"><button>글 목록으로 돌아가기</button></a></small><br>
+    <br>
+    <br>
         
         제목: {{ board.title }}<br>
         내용: {{ board.content }}<br>
 
-        <small?><a href="/boards/"><button>글 목록으로 돌아가기</button></a></small>
 
-    <h3>Comments</h3>
+    <h3>Comments</h3> 
 
     <a href = "{% url 'Boards:comment' pk=board.pk %}" board.pk>댓글 쓰기</a><br>
     

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+</head>
+<body>
+{% if not board %}
+
+    <h1>검색 결과가 없습니다</h1>
+
+{% else %}
+    <h1>검색 결과</h1>
+    <hr>
+
+    {% for board in board.all %}
+    <div> 
+        <div>
+            <table>
+                <h2>{{ board.title }}</h2>
+                <p>{{ board.content }}<a href="{% url 'Boards:page' board.id %}"> ...자세히 보기</a></p> 
+            </table>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+
+{% endif %}
+
+</body>
+</html>
