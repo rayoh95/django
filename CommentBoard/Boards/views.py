@@ -6,16 +6,23 @@ from django.db.models import Q
 # Create your views here.
 
 #Boards 는 게시글들의 목록을 볼 수 있는 게시판
-def Boards(request):
+def boards(request):
 
-    board = Board.objects.all()
+    boards = Board.objects.all()
+    keyWord = ""
+    if request.method == "POST":
+        keyWord = request.POST.get('keyWord',"")
+        
+        if keyWord:
+            boards = Board.objects.filter(Q(title__icontains=keyWord) | Q(content__icontains=keyWord)).order_by("-id")
+       
 
-    context = { 'board' : board }
+    context = {'boards':boards, 'keyWord':keyWord}
     return render(request, 'index/Boards.html', context)
 
 
 #Create_post 는 게시글 한 개 쓰기
-def create_post(request):
+def create_board(request):
 
     if request.method == "POST":
         form = BoardForm(request.POST)
@@ -23,15 +30,13 @@ def create_post(request):
         if form.is_valid():
             form.save()
             return render(request, 'index/success.html')
-
-    else:
-        board = BoardForm()
-    
+   
+    board = BoardForm()
     context = { 'board' : board } 
     return render(request, 'index/Board.html', context)
 
 
-def update_post(request, pk):
+def update_board(request, pk):
 
     board = get_object_or_404(Board, pk=pk)
 
@@ -41,14 +46,12 @@ def update_post(request, pk):
         if form.is_valid():
             form.save()
             return render(request, 'index/success.html')
-    
-    else:
-        board = BoardForm(instance=board)
-
+        
+    board = BoardForm(instance=board)
     context = {'board':board}
     return render(request, 'index/update.html', context)
 
-def delete_post(request, pk):
+def delete_board(request, pk):
 
     board = Board.objects.get(pk=pk)
 
@@ -57,7 +60,7 @@ def delete_post(request, pk):
 
 def page(request, pk):
 
-    board = Board.objects.get(pk=pk)
+    board = get_object_or_404(Board, pk=pk)
     comments = board.comment_set.all()
 
     context = {'board' : board, 'comments' : comments }
@@ -103,21 +106,3 @@ def update_comment(request, board_id, comment_id):
         form = CommentForm(instance=comment)
     context = { 'form' : form }
     return render(request, 'index/update_comment.html', context)
-
-
-def search(request):
-
-    # board = Board.objects.all().order_by("-id")
-
-    keyWord = request.POST.get('keyWord',"")
-
-    if keyWord:
-        board = Board.objects.filter(Q(title__icontains=keyWord) | Q(content__icontains=keyWord)).order_by("-id")
-        return render(request, 'index/Search.html', {'board':board, 'keyWord':keyWord})
-    else:
-        return render(request,'index/Search.html')
-
-    
-
-
-    

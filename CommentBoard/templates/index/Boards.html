@@ -13,7 +13,7 @@
         background: #3379FE; padding: 0.3em 0.5em; margin-right: 0.1em; text-decoration:none">글 작성하러 가기</a>
         
         <!-- 검색창 -->
-        <form action="/boards/search/" method="POST">
+        <form action="" method="POST">
             {% csrf_token %}
             <input type="search" placeholder="Search" name="keyWord" value="{{keyWord}}">
             <button type="submit">Search</button>
@@ -30,18 +30,18 @@
 
     <div>
         <hr>
-        {% for a in board %}
+        {% for board in boards %}
             <div style = "height: 40px;">
                 <li style = "list-style: none; float: left; margin-left: 70px;">
-                    {{ a.id }}
+                    {{ board.id }}
                 </li>
                 <li style = "list-style: none; float: left; margin-left: 60px;">
-                    <a href = "/boards/{{a.pk}}/">{{ a.title }}</a>
+                    <a href = "/boards/{{board.pk}}/">{{ board.title }}</a>
                 </li>
             </div>
             <div style = "position: relative; top: -45px; left: 900px;">
-                <small><a href="{% url 'Boards:update' a.id %}" style = "text-decoration:none">글 수정하기</a></small><br>
-                <small><a href="{% url 'Boards:delete' a.id %}" style = "text-decoration:none">글 삭제하기</a></small>
+                <small><a href="{% url 'Boards:update' board.id %}" style = "text-decoration:none">글 수정하기</a></small><br>
+                <small><a href="{% url 'Boards:delete' board.id %}" style = "text-decoration:none">글 삭제하기</a></small>
             </div>
         {% endfor %}
     </div>
