@@ -32,6 +32,7 @@ def create_board(request):
             return render(request, 'index/success.html')
    
     board = BoardForm()
+    print(board)
     context = { 'board' : board } 
     return render(request, 'index/Board.html', context)
 

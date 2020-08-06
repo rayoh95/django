@@ -24,7 +24,11 @@
     <div style = "height: 25px;">
         <ul>
             <li style = "list-style: none; float: left; margin-left: 20px;">번호</li>
-            <li style = "list-style: none; float: left; margin-left: 50px;">제목</li>
+            <li style = "list-style: none; float: left; margin-left: 50px;">제목</li><br>
+        </ul>
+        <ul>
+            <li style = "list-style: none; position: relative; top: -50px; left: 1000px"><a href="{% url 'accounts:login' %}" style = "text-decoration:none; font-size: 0.8rem">로그인</a></li>
+            <li style = "list-style: none; position: relative; top: -50px; left: 1000px"><a href="{% url 'accounts:logout' %}" style = "text-decoration:none; font-size: 0.8rem">로그아웃</a></li>
         </ul>
     </div>
 
