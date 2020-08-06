@@ -11,7 +11,6 @@ def signup(request):
             return redirect('accounts:login')
         else:
             return render(request, 'accounts/signup_pwError.html')
-        return render(request, 'accounts/signup.html')
 
     return render(request, 'accounts/signup.html')
 
@@ -34,4 +33,3 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('Boards:boards')
-    

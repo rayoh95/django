@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Board, Comment
 from .forms import BoardForm, CommentForm
 from django.db.models import Q
+from django.contrib.auth.models import User
+
 
 # Create your views here.
 
@@ -10,12 +12,13 @@ def boards(request):
 
     boards = Board.objects.all()
     keyWord = ""
+
     if request.method == "POST":
         keyWord = request.POST.get('keyWord',"")
         
         if keyWord:
-            boards = Board.objects.filter(Q(title__icontains=keyWord) | Q(content__icontains=keyWord)).order_by("-id")
-       
+            boards = Board.objects.filter(Q(title__icontains=keyWord) | Q(content__icontains=keyWord) | Q(author__User__icontains=keyWord)).order_by("-id")
+        
 
     context = {'boards':boards, 'keyWord':keyWord}
     return render(request, 'index/Boards.html', context)
@@ -28,11 +31,12 @@ def create_board(request):
         form = BoardForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            board = form.save(commit = False)
+            board.author = User.objects.get(username = request.user.get_username())
+            board = form.save()
             return render(request, 'index/success.html')
    
     board = BoardForm()
-    print(board)
     context = { 'board' : board } 
     return render(request, 'index/Board.html', context)
 
