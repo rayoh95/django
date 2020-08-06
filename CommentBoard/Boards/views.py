@@ -12,12 +12,12 @@ def boards(request):
 
     boards = Board.objects.all()
     keyWord = ""
-
+    
     if request.method == "POST":
         keyWord = request.POST.get('keyWord',"")
         
         if keyWord:
-            boards = Board.objects.filter(Q(title__icontains=keyWord) | Q(content__icontains=keyWord) | Q(author__User__icontains=keyWord)).order_by("-id")
+            boards = Board.objects.filter(Q(title__icontains=keyWord) | Q(content__icontains=keyWord) | Q(author__username__icontains=keyWord)).order_by("-id")
         
 
     context = {'boards':boards, 'keyWord':keyWord}
