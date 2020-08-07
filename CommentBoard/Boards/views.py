@@ -11,16 +11,27 @@ from django.contrib.auth.models import User
 def boards(request):
 
     boards = Board.objects.all()
-    keyWord = ""
-    
-    if request.method == "POST":
-        keyWord = request.POST.get('keyWord',"")
-        
-        if keyWord:
-            boards = Board.objects.filter(Q(title__icontains=keyWord) | Q(content__icontains=keyWord) | Q(author__username__icontains=keyWord)).order_by("-id")
-        
+    keyword = ""
 
-    context = {'boards':boards, 'keyWord':keyWord}
+    if request.method == "POST":
+        keyword = request.POST.get('keyword',"")
+        menu = request.POST.get('menu',"")
+     
+        if menu == "search_boards_by_all":
+            if keyword:
+                boards = Board.objects.filter(Q(title__icontains=keyword) | Q(content__icontains=keyword) | Q(author__username__icontains=keyword)).order_by("-id")
+        elif menu == "search_boards_by_title":
+            if keyword:
+                boards = Board.objects.filter(title__icontains=keyword).order_by("-id")
+        
+        elif menu == "search_boards_by_content":
+            if keyword:
+                boards = Board.objects.filter(content__icontains=keyword).order_by("-id")
+        else:
+            if keyword:
+                boards = Board.objects.filter(author__username__icontains=keyword).order_by("-id")
+
+    context = {'boards':boards, 'keyword':keyword}
     return render(request, 'index/Boards.html', context)
 
 

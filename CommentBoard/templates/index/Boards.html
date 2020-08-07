@@ -13,11 +13,24 @@
         background: #3379FE; padding: 0.3em 0.5em; margin-right: 0.1em; text-decoration:none">글 작성하러 가기</a>
         
         <!-- 검색창 -->
-        <form action="" method="POST">
+        <!-- <form action="" method="POST">
             {% csrf_token %}
             <input type="search" placeholder="Search" name="keyWord" value="{{keyWord}}">
             <button type="submit">Search</button>
-        </form>
+        </form> -->
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="search" placeholder="Search" name="keyword" value="{{keyword}}">
+            <select name="menu" >
+              <option value="search_boards_by_all">통합검색</option>
+              <option value="search_boards_by_title">제목검색</option>
+              <option value="search_boards_by_content">내용검색</option>
+              <option value="search_boards_by_user">아이디 검색</option>
+            </select>
+            <button type="submit">Search</button>
+          </form>
+
+
 
     </div>
 
