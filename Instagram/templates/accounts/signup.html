@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>singup</title>
+</head>
+<body>
+    <div>
+        <h2>sign up</h2>
+
+        <form action="{%url 'accounts:signup'%}" method="POST">
+            {% csrf_token %}
+            Username:
+            <input name="username" type="text">
+            <br>
+            Password:
+            <input name="password1" type="password">
+            <br>
+            Confrim Password:
+            <input name="password2" type="password">
+            <br><br>
+            <input type="submit" value="sign up">            
+        </form>
+    </div>
+
+</body>
+</html>
