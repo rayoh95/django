@@ -25,7 +25,7 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('Boards:boards')
+            return redirect('posts:posts')
         else:
             return render(request, 'accounts/login_fail.html')
     else:
@@ -34,4 +34,4 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('Boards:boards')
+    return redirect('posts:posts')

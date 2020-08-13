@@ -9,9 +9,11 @@
     <h1>Instagram</h1>
 
     {% for post in posts %}
+        {{post.author}}<br>
         {{post.image}}<br>
         {{post.title}}<br>
         {{post.content}}<br>
+        <hr>
     {% endfor %}
 </body>
 </html>
