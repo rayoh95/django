@@ -3,6 +3,7 @@ from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.db.models import Q
 
 # Create your views here.
 
@@ -103,3 +104,16 @@ def delete_comment(request, post_id, comment_id):
     
     return redirect('posts:read_post', post_id)
 
+def search_post(request):
+
+    if request.method == "POST":
+        keyword = request.POST.get('keyword',"")  
+        
+        if keyword:
+            posts = Post.objects.filter(Q(title__icontains=keyword) | Q(content__icontains=keyword) | Q(author__username__icontains=keyword)).order_by("-id")
+            context = {'posts':posts, 'keyword':keyword}
+            return render(request, 'posts/search_post.html', context)
+
+    return render(request, 'posts/search_post.html')
+    
+    
