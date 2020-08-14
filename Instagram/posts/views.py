@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -18,7 +19,6 @@ def create_post(request):
 
     user = request.user
     # print('request', request, dir(request))
-    # print(request.user)
     if request.method == "POST":
         form = PostForm(request.POST)
         
@@ -36,8 +36,9 @@ def create_post(request):
 # 게시글 읽기 (Read)
 def read_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    comments = post.comment_set.all()
 
-    context = { 'post' : post }
+    context = { 'post' : post, 'comments' : comments  }
     return render(request, 'posts/post.html', context)
 
 
@@ -62,6 +63,43 @@ def delete_post(request, pk):
     return redirect('posts: posts')
 
 
-def create_comment():
-    return
+def create_comment(request, pk):
+    
+    if request.method == "POST":
+        post = get_object_or_404(Post, pk=pk)
+        message = request.POST.get('message')
+
+        if not message:
+            return HttpResponse('댓글 내용을 입력하세요', status=400)
+        
+        Comment.objects.create( post=post, author=request.user, message=message)
+        return redirect('posts:read_post', pk=pk)
+    
+    form = CommentForm()
+    context = { 'form' : form }
+    return render(request, 'posts/create_comment.html', context)
+
+
+def update_comment(request, post_id, comment_id):
+
+    comment = get_object_or_404(Comment, pk=comment_id)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+
+        if form.is_valid():
+            comment.save()
+            return redirect('posts:read_post', pk=post_id)
+    else:
+        form = CommentForm(instance=comment)
+    context = { 'form' : form }
+    return render(request, 'posts/update_comment.html', context)
+
+
+def delete_comment(request, post_id, comment_id):
+
+    comment = Comment.objects.get(pk=comment_id)
+    comment.delete()
+    
+    return redirect('posts:read_post', post_id)
 

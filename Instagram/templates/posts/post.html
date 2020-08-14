@@ -11,5 +11,16 @@
     {{ post.title }}<br>
     {{ post.content }}<br>
 
+    <h4>comments</h4>
+    <ul>
+        
+        {% for comment in comments %}
+             
+            <li>
+                <h4>{{ comment.author }}</h4>
+                {{ comment.message }}
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
