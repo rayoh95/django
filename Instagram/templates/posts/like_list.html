@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>like_list</title>
+</head>
+<body>
+    좋아요 목록
+    {% for post in posts %}
+    {{post.author}}<br>
+    {{post.image}}<br>
+    {{post.title}}<br>
+    {{post.content}}<br>
+    <hr>
+    {% endfor %}
+</body>
+</html>

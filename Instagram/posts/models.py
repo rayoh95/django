@@ -7,9 +7,16 @@ class Post(models.Model):
     content = models.TextField()
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     image = models.ImageField(null=True, blank=True, upload_to="image")
+    likes = models.ManyToManyField(User, blank=True, related_name = 'like_users')
+
 
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)   #, related_name='comments'
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     message = models.TextField()
+
+# posts.Post.author: (fields.E304) Reverse accessor for 'Post.author' clashes with reverse accessor for 'Post.likes'.
+#         HINT: Add or change a related_name argument to the definition for 'Post.author' or 'Post.likes'.
+# posts.Post.likes: (fields.E304) Reverse accessor for 'Post.likes' clashes with reverse accessor for 'Post.author'.
+#         HINT: Add or change a related_name argument to the definition for 'Post.likes' or 'Post.author'.

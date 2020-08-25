@@ -57,13 +57,13 @@ def update_post(request, pk):
     context = {'form' : form}
     return render(request, 'posts/update_post.html', context)
 
-
+# 게시글 삭제 (Delete)
 def delete_post(request, pk):
     post = Post.objects.get(pk=pk)
     post.delete()
     return redirect('posts: posts')
 
-
+# 댓글 작성 (Create)
 def create_comment(request, pk):
     
     if request.method == "POST":
@@ -80,7 +80,7 @@ def create_comment(request, pk):
     context = { 'form' : form }
     return render(request, 'posts/create_comment.html', context)
 
-
+# 댓글 수정 (Update)
 def update_comment(request, post_id, comment_id):
 
     comment = get_object_or_404(Comment, pk=comment_id)
@@ -96,7 +96,7 @@ def update_comment(request, post_id, comment_id):
     context = { 'form' : form }
     return render(request, 'posts/update_comment.html', context)
 
-
+# 댓글 삭제 (Delete)
 def delete_comment(request, post_id, comment_id):
 
     comment = Comment.objects.get(pk=comment_id)
@@ -104,6 +104,7 @@ def delete_comment(request, post_id, comment_id):
     
     return redirect('posts:read_post', post_id)
 
+# 검색 기능
 def search_post(request):
 
     if request.method == "POST":
@@ -115,5 +116,37 @@ def search_post(request):
             return render(request, 'posts/search_post.html', context)
 
     return render(request, 'posts/search_post.html')
+
+
+# 좋아요 기능
+def like(request, post_id):
+    post = get_object_or_404(Post, pk = post_id)
+
+    if post.likes.filter(username=request.user.username).exists():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
     
+    post.save()
+    return redirect('posts:read_post', post_id)
+
+
+# # 좋아요 확인
+# def like_list(request):
+#     posts = Post.objects.all()
+
+#     if request.user.is_authenticated:
+#         posts = Post.likes.get(username=request.user.username)
+#         context = {'posts' : posts}
+#         return render(request, 'posts/like_list.html', context )
+        
+
+#     else:
+#         context = {'post' : posts}
+#         return render(request, 'posts/like_list.html', context )
+
+
+# 팔로우 기능
+def follow():
     
+    return()
