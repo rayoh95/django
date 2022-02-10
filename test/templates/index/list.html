@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board list</title>
+</head>
+<body>
+    <h1>게시판 글 목록</h1>
+    <a href="/templates/create/"><button>글 작성하러 가기</button></a>
+    {% for a in board %}
+        <hr>
+        id : {{ a.id }}
+        <a href = "/templates/page/{{a.pk}}/"><button>제목 : {{ a.title }}</button></a>
+    {% endfor  %}
+</body>
+</html>

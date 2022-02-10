@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 작성하기</title>
+</head>
+<body>
+    <h1>글 작성하기</h1>
+    
+        제목: {{ board.title}}<br>
+        내용: {{ board.content}}<br>
+
+        <a href = "{% url 'Boards:delete' board.pk %}">삭제</a>
+        <a href = "{% url 'Boards:update' board.pk %}">수정</a>
+        
+        <!-- <input type="submit" value="수정하기">
+        <input type="submit" value="삭제하기"> -->
+   
+
+</body>
+</html>
