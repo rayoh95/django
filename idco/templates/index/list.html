@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>복습</title>
+</head>
+<body>
+    <h1>게시판 글 목록</h1>
+    <a href="/templates/create/"><button>글 작성하러 가기</button></a>
+    {% for a in youtube %}
+        <hr>
+        id : {{ a.id }}<br>
+        제목 : {{ a.title }}<br>
+        내용 : {{ a.content }}<br>
+        <a href="{% url 'IDCO:update' a.id %}"><button>글 수정하기</button></a>
+    {% endfor  %}
+    <hr>
+</body>
+</html>
