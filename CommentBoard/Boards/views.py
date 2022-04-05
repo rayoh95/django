@@ -30,7 +30,8 @@ def boards(request):
         else:
             if keyword:
                 boards = Board.objects.filter(author__username__icontains=keyword).order_by("-id")
-
+    for board in boards:
+        print(board.image)
     context = {'boards':boards, 'keyword':keyword}
     return render(request, 'index/Boards.html', context)
 
@@ -39,7 +40,7 @@ def boards(request):
 def create_board(request):
 
     if request.method == "POST":
-        form = BoardForm(request.POST)
+        form = BoardForm(request.POST, request.FILES)
 
         if form.is_valid():
             board = form.save(commit = False)
@@ -79,7 +80,10 @@ def page(request, pk):
     board = get_object_or_404(Board, pk=pk)
     comments = board.comment_set.all()
 
-    context = {'board' : board, 'comments' : comments }
+    board.views += 1
+    board.save()
+
+    context = {'board' : board, 'comments' : comments } 
     return render(request, 'index/page.html', context)
 
 def create_comment(request, pk):
@@ -90,7 +94,7 @@ def create_comment(request, pk):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.post = board     
+            comment.post = board
             comment.save()
             return redirect('Boards:page', pk=board.pk)
     else:
