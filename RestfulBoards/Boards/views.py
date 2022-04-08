@@ -13,10 +13,8 @@ def Boards(request):
     return render(request, 'index/Boards.html', context)
 
 
-
-
 #Board 는 게시글 한 개 쓰기
-def Create_post(request):\
+def Create_post(request):
 
     if request.method == "POST": 
         form = BoardForm(request.POST)
@@ -64,3 +62,5 @@ def page(request, pk):
    
     context = { 'board' : board }
     return render(request, 'index/page.html', context)
+
+
