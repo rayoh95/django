@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>comments</title>
+</head>
+<body>
+    <ul>
+        {% for comment in comments %}
+             
+            <li>
+                <h4>by {{ comment.author }}</h4>
+                {{ comment.message }}
+
+                <a href="{% url 'posts:update_comment' user.pk post.pk comment.pk %}">댓글 수정</a>
+                <a href="{% url 'posts:delete_comment' user.pk post.pk comment.pk %}">댓글 삭제</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'posts:create_comment' user.pk post.pk %}">댓글 작성</a>
+
+</body>
+</html>

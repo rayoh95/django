@@ -6,12 +6,23 @@
     <title>post</title>
 </head>
 <body>
-    {{ post.author }}<br>
+    {{ post.author }}
+    <!-- 팔로우/언팔로우 버튼 -->
+    {{ people.followers.all }}
+    {% if user != people %}
+        {% if user in people.followers.all %}
+            <a href="{% url 'accounts:follow' people.id %}">UnFollow</a>
+        {% else %}
+            <a href="{% url 'accounts:follow' people.id %}">Follow</a>
+        {% endif %}
+    {% endif %}
+    <br>
     {{ post.image }}<br>
     {{ post.title }}<br>
     {{ post.content }}<br>
 
     <h4>comments</h4>
+    <a href="{% url 'posts:create_comment' user.pk post.pk %}">댓글 작성</a>
     <ul>
         
         {% for comment in comments %}
@@ -20,6 +31,8 @@
                 <h4>{{ comment.author }}</h4>
                 {{ comment.message }}
             </li>
+            <a href="{% url 'posts:update_comment' user.pk post.pk comment.pk %}">댓글 수정</a>
+            <a href="{% url 'posts:delete_comment' user.pk post.pk comment.pk %}">댓글 삭제</a>
         {% endfor %}
     </ul>
 </body>

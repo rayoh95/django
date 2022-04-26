@@ -9,6 +9,9 @@
     <div>
         <h2>login</h2>
 
+        <a href="{% url 'accounts:signup' %}">회원가입</a>
+        <br>
+
         <form action="{% url 'accounts:login' %}" method="POST">
             {% csrf_token %}
             Username:

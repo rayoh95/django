@@ -5,17 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
-    <title>search</title>
+    <title>Mylist</title>
 </head>
 <body>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <button type="submit">Search</button>
-        <input type="search" placeholder="검색" name="keyword" value="{{keyword}}">    
-    </form>
-    <br>
     {% for post in posts %}
         <a href = "/{{user.id}}/posts/{{post.pk}}/">{{ post.author }}</a><br>
+        <!-- {{post.author}}<br> -->
         {{post.image}}<br>
         {{post.title}}<br>
         {{post.content}}<br>
@@ -24,7 +19,7 @@
 
     <div style = "width: 10px; height: 45px">
     </div>
-
+    
     <div>
         
         <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-bottom font-white">
@@ -32,13 +27,13 @@
                 <ul class="navbar-nav mr-auto">
                   
                   <li class="nav-item">
-                        <a class="fas fa-home" href="/posts/" style="color: white"></a>
+                    <a class="fas fa-home" href ="/posts/" style="color: white"></a>
                     </li>
                     <li class="nav-item">
                         <a class="fas fa-search" href="/posts/search/" style="color: white"></a>
                     </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/posts/" style="color: white" style="color: white">좋아요</a>
+                    <a class="nav-link" href="/posts/" style="color: white">좋아요</a>
                   </li>
                   <li class="nav-item">
                     <a class="fas fa-user" href="/posts/my_page/" style="color: white"></a>
